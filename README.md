@@ -5,19 +5,22 @@ Lua script to use mouse gestures in macOS using g-hub
 In G-HUB select the profile you want to use these gestures in. Click on "scripting". Click on "create a new lua script". (optional) Give the script a name and description. Click on "edit script". Copy the code from this script and paste it in the script editor that just opened. Click "script>save" or press Command+S to save the script. The script should now be working :)
 
 ## How to use:
-You perform the gestures by pressing the designated button, moving the mouse in the direction of the funtion that you want to use and then releasing the button.
+You perform the gestures by pressing the designated button, moving the mouse in the direction of the function that you want to use and then releasing the button. 
 
-## Gestures for button 4:
-Direction | Function  | Buttons | Default
----- | ------- | ----------- | -------
+You can also perform a simple click (without moving the mouse) on the gesture button to quickly toggle Mission Control.
+
+## Gestures for button 6:
+Direction / Action | Function | Buttons | Default
+------------------ | -------- | ------- | -------
+**Simple Click** | Mission Control | Control+Up-Arrow | Enabled
 Up | Mission Control | Control+Up-Arrow | Enabled
 Down | Application Windows | Control+Down-Arrow | Enabled
 Left | Move right a Space | Control+Right-Arrow | Enabled
 Right | Move left a Space | Control+Left-Arrow | Enabled
 
 ## Gestures for button 5:
-Direction | Function  | Buttons | Default
----- | ------- | ----------- | -------
+Direction | Function | Buttons | Default
+--------- | -------- | ------- | -------
 Up | none | n/a | n/a
 Down | none | n/a | n/a
 Left | Next page | Command+Right-Bracket | Enabled
@@ -27,7 +30,7 @@ Right | Previous page | Command+Left-Bracket | Enabled
 If you want to map the gestures to another button assign another button number to gestureButtonNumber
 The same goes for browser navigation, in that case assign another button number to navigationButtonNumber
 
-If you want the gesture to happen with more of less movement of your mouse change the value of minimalHorizontalMovement and/or minimalVerticalMovement.
+If you want the gesture to happen with more of less movement of your mouse change the value of minimalHorizontalMovement and/or minimalVerticalMovement. These thresholds also determine how still your mouse needs to be to register a simple click.
 
 If you want to disable some of the features change the value of missionControlEnabled/ applicationWindowsEnabled/ moveBetweenSpacesEnabled/ browserNavigationEnabled to false
 
