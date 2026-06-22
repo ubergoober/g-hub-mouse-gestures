@@ -1,6 +1,6 @@
 --[[
 Author: Mark van den Berg
-Version: 0.8
+Version: 0.9 (Modified for click-to-toggle Mission Control)
 Date: 01-05-2020
 
 Special credits to https://github.com/wookiefriseur for showing a way to do this for windows gestures which inspired this script
@@ -24,7 +24,7 @@ The default settings below will be for the navigation gestures for in browsers
 
  
 -- The button your gestures are mapped to G1 = 1, G2 = 2 etc..
-gestureButtonNumber = 4;
+gestureButtonNumber = 6;
 
 -- The button navigation actions are mapped to G1 = 1, G2 = 2 etc..
 navigationButtonNumber = 5;
@@ -80,11 +80,19 @@ function OnEvent(event, arg, family)
 		horizontalDifference = horizontalStartingPosistion - horizontalEndingPosistion
 		verticalDifference = verticalStartingPosistion - verticalEndingPosistion
 
-		-- Determine the direction of the mouse and if the mouse moved far enough
-		if horizontalDifference > minimalHorizontalMovement then mouseMovedLeft(arg) end
-		if horizontalDifference < -minimalHorizontalMovement then mouseMovedRight(arg) end
-		if verticalDifference > minimalVerticalMovement then mouseMovedDown(arg) end
-		if verticalDifference < -minimalVerticalMovement then mouseMovedUp(arg) end
+		-- Check if it was a simple click (did not exceed thresholds in any direction)
+		if math.abs(horizontalDifference) < minimalHorizontalMovement and math.abs(verticalDifference) < minimalVerticalMovement then
+			if arg == gestureButtonNumber and missionControlEnabled then
+				if debuggingEnabeld then OutputLogMessage("Simple click detected: Triggering Mission Control\n") end
+				performMissionControlGesture()
+			end
+		else
+			-- Determine the direction of the mouse and if the mouse moved far enough
+			if horizontalDifference > minimalHorizontalMovement then mouseMovedLeft(arg) end
+			if horizontalDifference < -minimalHorizontalMovement then mouseMovedRight(arg) end
+			if verticalDifference > minimalVerticalMovement then mouseMovedDown(arg) end
+			if verticalDifference < -minimalVerticalMovement then mouseMovedUp(arg) end
+		end
 	end
 end
 
@@ -164,13 +172,6 @@ function performNextPageGesture()
 	pressTwoKeys(firstKey, secondKey)
 end
 
-function performPreviousPageGesture()
-	if debuggingEnabeld then OutputLogMessage("performPreviousPageGesture\n") end
-	firstKey = "lgui"
-	secondKey = "lbracket"
-	pressTwoKeys(firstKey, secondKey)
-end
-
 -- Helper Functions
 function pressTwoKeys(firstKey, secondKey)
 	PressKey(firstKey)
@@ -180,4 +181,3 @@ function pressTwoKeys(firstKey, secondKey)
 	ReleaseKey(firstKey)
 	ReleaseKey(secondKey)
 end
-
